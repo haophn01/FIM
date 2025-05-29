@@ -45,4 +45,32 @@ def monitor_files():
   
 monitor_files()
 
+'''
 
+Challenge 2: Create a File Exclusion List
+
+Sometimes we don’t want to monitor certain files or directories. Imagine you want to exclude files like .log or .tmp files, or perhaps files in a specific directory.
+
+Challenge:
+
+Modify the program to allow the user to specify a list of file types or specific directories to exclude from being monitored.
+You’ll need to learn how to check the file extensions (like .txt, .log, etc.) and the directory the file is in.
+Hint: The os.path.splitext() function can be helpful for getting the file extension.
+Challenge 3: Implement Logging with Log Rotation
+
+Imagine if the file changes every minute, and your log file keeps growing. It will eventually become too large to manage. We can prevent this by implementing log rotation.
+
+Challenge:
+
+Implement log rotation in the log file. When the log file reaches a certain size (for example, 1MB), create a new log file and start logging to the new file. You can name the new log file using the current timestamp so that each file has a unique name.
+Hint: You will need to use the os.path.getsize() function to check the size of the log file, and datetime to get the current time.
+Challenge 4: Track the File’s Previous Hash and Display Only Changes
+
+Instead of simply printing when the file changes, let’s make it more useful by storing a history of changes for each file.
+
+Challenge:
+
+Modify the program so that when a file’s hash changes, it logs the previous hash as well, so you can compare the old and new values.
+This way, you’ll have a complete history of what the file looked like at each change.
+Hint: Use a dictionary to store each file’s hash history, with the file path as the key and a list of hashes as the value.
+'''

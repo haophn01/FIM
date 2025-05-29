@@ -1,0 +1,6 @@
+{
+    "github.copilot.chat.search.semanticTextResults": false,
+    "github.copilot.chat.summarizeAgentConversationHistory.enabled": false,
+    "github.copilot.chat.setupTests.enabled": false,
+    "C_Cpp.copilotHover": "disabled"
+}

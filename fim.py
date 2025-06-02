@@ -2,6 +2,24 @@ import hashlib
 import os
 import time 
 files_to_monitor = ['watched_file.txt', 'requirements.txt'] # List of files to monitor
+
+# Exclusion lists
+excluded_extensions = ['.log', '.tmp']
+excluded_directories = ['logs', 'temp']
+
+
+def is_excluded(file_path):
+    # Check extension
+    _, ext = os.path.splitext(file_path)
+    if ext in excluded_extensions:
+        return True
+    # Check if file is in an excluded directory
+    for ex_dir in excluded_directories:
+        if os.path.commonpath([os.path.abspath(file_path), os.path.abspath(ex_dir)]) == os.path.abspath(ex_dir):
+            return True
+    return False
+  
+
 def calculate_file_hash(file_path):
   """Calculate and return the hash of the file."""
   hash_object = hashlib.sha256() # Create a new SHA-256 hash object
@@ -25,24 +43,27 @@ def log_change(file_path):
         
         
 def monitor_files():
-  """Monitor files for changes by comparing their hashes."""
-  previous_hashes = {} # Dictionary to store previous hashes for each file
-  
-  while True: # This will make the code run continuously
-    for file_path in files_to_monitor: # Loop through each file in the list
-      if os.path.exists(file_path): # Check if the file exists
-        current_hash = calculate_file_hash(file_path) # Get the current hash of the file
-        # If the file's hash is different from the previous one, it has changed    
-        if file_path not in previous_hashes or previous_hashes[file_path] != current_hash:
-          print(f"File has changed: {file_path}") # Print that the file changed
-          log_change(file_path) # Log the change
-          previous_hashes[file_path] = current_hash #Update the stored hash for this file
-        else: 
-          print(f"No change detected for {file_path}") # Print that the file has not changed
-    else: 
-         print(f"File does not exist: {file_path}") # Print if the file doesn't exist
-    time.sleep(5) # Wait for 5 second before checking again
-  
+    """Monitor files for changes by comparing their hashes."""
+    previous_hashes = {}  # Stores previous hashes for each file
+
+    while True:
+        for file_path in files_to_monitor:
+            if is_excluded(file_path):
+                print(f"Excluded from monitoring: {file_path}")
+                continue
+            if os.path.exists(file_path):
+                current_hash = calculate_file_hash(file_path)
+                # Log and update hash only if the file has changed
+                if file_path not in previous_hashes or previous_hashes[file_path] != current_hash:
+                    print(f"File has changed: {file_path}")
+                    log_change(file_path)
+                    previous_hashes[file_path] = current_hash
+                else:
+                    print(f"No change detected for {file_path}")
+            else:
+                print(f"File does not exist: {file_path}")
+        time.sleep(5)  # Wait before checking again
+
 monitor_files()
 
 '''

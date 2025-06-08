@@ -36,7 +36,9 @@ def log_change(file_path):
     os.makedirs(log_directory) # Create the folder if it doesn't exist
 
   log_file_path = os.path.join(log_directory,'file_changes.log') # Path to the log file
-  
+  limit_size = 1024 * 1024
+  if os.path.getsize(log_file_path) > limit_size:
+    pass
   with open(log_file_path, 'a') as log_file: # Open the log file in append mode
     log_file.write(f"{time.ctime()}: {file_path} has changed.\n") # Write the log with a timestamp
     log_file.write(f"{os.stat(file_path)}\n")

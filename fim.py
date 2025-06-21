@@ -1,6 +1,8 @@
 import hashlib
 import os
 import time 
+import datetime
+
 files_to_monitor = ['watched_file.txt', 'requirements.txt'] # List of files to monitor
 
 # Exclusion lists
@@ -30,24 +32,27 @@ def calculate_file_hash(file_path):
 
 
 def log_change(file_path):
-  """Log the changes to a file in the log folder."""
-  log_directory = 'logs' # The folder where we'll store the logs
-  if not os.path.exists(log_directory): # Check if the folder exists
-    os.makedirs(log_directory) # Create the folder if it doesn't exist
+    """Log the changes to a file in the log folder."""
+    log_dir = 'logs'
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_file = os.path.join(log_dir, 'file_changes.log')
+    limit_size = 1 * 1024  # 3KB
 
-  log_file_path = os.path.join(log_directory,'file_changes.log') # Path to the log file
-  limit_size = 1024 * 1024
-  if os.path.getsize(log_file_path) > limit_size:
-    pass
-  with open(log_file_path, 'a') as log_file: # Open the log file in append mode
-    log_file.write(f"{time.ctime()}: {file_path} has changed.\n") # Write the log with a timestamp
-    log_file.write(f"{os.stat(file_path)}\n")
+    # Rotate log if needed before every write
+    if os.path.exists(log_file) and os.path.getsize(log_file) > limit_size:
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        rotated_log = os.path.join(log_dir, f'file_changes_{timestamp}.log')
+        os.rename(log_file, rotated_log)
+
+    with open(log_file, 'a') as f:
+        f.write(f"{time.ctime()}: {file_path} has changed.\n")
+        f.write(f"{os.stat(file_path)}\n")
         
         
 def monitor_files():
     """Monitor files for changes by comparing their hashes."""
     previous_hashes = {}  # Stores previous hashes for each file
-
     while True:
         for file_path in files_to_monitor:
             if is_excluded(file_path):
@@ -67,6 +72,7 @@ def monitor_files():
         time.sleep(5)  # Wait before checking again
 
 monitor_files()
+
 
 '''
 

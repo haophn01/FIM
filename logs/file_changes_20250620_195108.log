@@ -1,0 +1,10 @@
+Fri Jun 20 19:49:58 2025: watched_file.txt has changed.
+os.stat_result(st_mode=33188, st_ino=21874895, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=127, st_atime=1750474136, st_mtime=1750473999, st_ctime=1750473999)
+Fri Jun 20 19:49:58 2025: requirements.txt has changed.
+os.stat_result(st_mode=33188, st_ino=21874894, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=243, st_atime=1750474136, st_mtime=1750473992, st_ctime=1750473992)
+Fri Jun 20 19:50:13 2025: requirements.txt has changed.
+os.stat_result(st_mode=33188, st_ino=21874894, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=26, st_atime=1750474213, st_mtime=1750474211, st_ctime=1750474211)
+Fri Jun 20 19:50:23 2025: watched_file.txt has changed.
+os.stat_result(st_mode=33188, st_ino=21874895, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=50, st_atime=1750474222, st_mtime=1750474220, st_ctime=1750474220)
+Fri Jun 20 19:50:58 2025: watched_file.txt has changed.
+os.stat_result(st_mode=33188, st_ino=21874895, st_dev=16777234, st_nlink=1, st_uid=501, st_gid=20, st_size=127, st_atime=1750474257, st_mtime=1750474257, st_ctime=1750474257)
